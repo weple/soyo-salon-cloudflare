@@ -45,3 +45,12 @@
 .detail-page .detail-content>h2{font-size:20px;margin:30px 0 10px}
 @media(max-width:370px){.detail-page .detail-summary{margin-left:10px;margin-right:10px;padding-left:3px;padding-right:3px}.detail-summary>div{gap:5px;padding-left:4px;padding-right:4px}.detail-summary svg{width:18px}.detail-summary p,.detail-summary p b{font-size:10px}.detail-summary p span{font-size:9px}.detail-hero-copy h1{font-size:29px}.detail-intro-cover{flex-basis:60px;width:60px;height:90px}}
 @media(min-width:800px){.detail-page .detail-hero{min-height:330px;padding-left:40px}.detail-hero-copy h1{font-size:42px}.detail-summary{margin-left:28px;margin-right:28px}.detail-summary p,.detail-summary p b{font-size:13px}.detail-summary p span{font-size:11px}}
+.detail-summary>.detail-place-link{color:inherit;text-decoration:none;min-width:0}
+.detail-place-link p span{color:#725b43;text-decoration:underline;text-underline-offset:2px}
+.detail-place-link:focus-visible{outline:3px solid #6045c2;outline-offset:2px;border-radius:8px}
+.detail-summary p span small{font-size:9px;font-weight:700;color:#735d43}
+.bottom-action .deposit-note{gap:3px}
+.bottom-action .deposit-note small{font-size:10px}
+.bottom-action .deposit-note b{font-size:13px;color:#776b5a}
+.bottom-action .cta{gap:8px}
+.free-badge{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;background:#ffffff30;font-size:11px;font-weight:800;line-height:1}

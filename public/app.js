@@ -91,8 +91,8 @@ function detail(){
     </section>
     <section class="detail-summary" aria-label="모임 정보">
       <div>${icon('calendar',22)}<p><b>${esc(dateLabel)}</b><span>${time(e.date)}${e.end_time?' – '+esc(e.end_time):''}</span></p></div>
-      <div>${icon('pin',22)}<p><b>${esc(e.place)}</b><span>모임 장소</span></p></div>
-      <div>${icon('cup',22)}<p><b>참여보증금</b><span>${deposit} · 음료 각자 주문</span></p></div>
+      <a class="detail-place-link" href="https://map.naver.com/p/search/${encodeURIComponent(e.place)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(e.place)} 네이버 지도에서 열기">${icon('pin',22)}<p><b>${esc(e.place)}</b><span>지도에서 보기 ↗</span></p></a>
+      <div>${icon('cup',22)}<p><b>참여 비용 무료</b><span>참여보증금 <small>${deposit}</small></span></p></div>
     </section>
     <section class="content detail-content">
       <div class="detail-section">
@@ -115,10 +115,9 @@ function detail(){
         <h2 class="detail-section-title">참여 안내</h2>
         <ul class="detail-guide">
           <li>완독하지 않아도 편안하게 참여할 수 있어요.</li>
-          <li>책과 필기도구를 준비해 주세요.</li>
           <li>신청 승인 후 24시간 이내 참여보증금을 입금해 주세요.</li>
           <li>모임 참석 시 종료 후 전액 환불됩니다.</li>
-          <li>모임 2일 전까지 취소하면 전액 환불되며, 하루 전·당일 취소 또는 노쇼는 전액 기부됩니다.</li>
+          <li>모임 2일 전까지 취소하면 전액 환불되며, 하루 전·당일 취소 또는 노쇼 시 보증금 전액을 어려운 이웃에게 기부합니다.</li>
           <li>운영자 사정으로 모임이 취소되면 전액 환불됩니다.</li>
         </ul>
       </div>
@@ -126,9 +125,9 @@ function detail(){
       <h2>함께한 분들의 후기</h2>
       ${publicReviews.filter(r=>r.event_id===e.id).map(r=>`<article class="my-card"><b>${'★'.repeat(r.rating)}</b><p>${esc(r.body)}</p><small>${esc(r.users?.nickname||'소요 회원')}</small></article>`).join('')||'<p class="footnote">아직 후기가 없습니다.</p>'}
     </section>
-    <div class="bottom-action"><div><small>참여보증금</small><b>${deposit}</b></div><button class="cta" onclick="${a?"nav('my')":`requestApply('${e.id}')`}" ${!a&&state(e)!=='모집 중'?'disabled':''}>${a?label[a.status]:state(e)==='모집 중'?'모임 신청하기':state(e)} ${icon('arrow',18)}</button></div>`
+    <div class="bottom-action"><div class="deposit-note"><small>참여보증금</small><b>${deposit}</b></div><button class="cta" onclick="${a?"nav('my')":`requestApply('${e.id}')`}" ${!a&&state(e)!=='모집 중'?'disabled':''}>${a?label[a.status]:state(e)==='모집 중'?'모임 신청하기':state(e)} ${!a&&state(e)==='모집 중'?'<span class="free-badge">무료</span>':''} ${icon('arrow',18)}</button></div>`
 }
-function requestApply(id){sessionStorage.setItem('soyo-intent',id);if(!db.user){nav('login');return}const e=db.events.find(e=>e.id===id);openModal(`<span class="modal-symbol">${icon('book',30)}</span><h2>함께 읽어볼까요?</h2><p>『${esc(e.book)}』<br>${date(e.date)} · ${time(e.date)}</p><div class="guidance">참여보증금은 5,000원입니다.<br>신청 승인 후 입금 안내를 확인해 주세요.<br>승인 후 24시간 이내 입금해 주세요.<br>참석 시 모임 종료 후 전액 환불됩니다.</div><label class="consent"><input id="agree" type="checkbox"> 신청 및 참석 확인을 위한 닉네임 이용에 동의합니다.</label><button class="cta" onclick="submitApplication('${id}')">이 모임 신청하기 ${icon('arrow',18)}</button>`)}
+function requestApply(id){sessionStorage.setItem('soyo-intent',id);if(!db.user){nav('login');return}const e=db.events.find(e=>e.id===id);openModal(`<span class="modal-symbol">${icon('book',30)}</span><h2>함께 읽어볼까요?</h2><p>『${esc(e.book)}』<br>${date(e.date)} · ${time(e.date)}</p><div class="guidance">참여보증금은 5,000원입니다.<br>신청 승인 후 입금 안내를 확인해 주세요.<br>승인 후 24시간 이내 입금해 주세요.<br>참석 시 모임 종료 후 전액 환불됩니다.<br>하루 전·당일 취소 또는 노쇼 시 어려운 이웃에게 전액 기부됩니다.</div><label class="consent"><input id="agree" type="checkbox"> 신청 및 참석 확인을 위한 닉네임 이용에 동의합니다.</label><button class="cta" onclick="submitApplication('${id}')">이 모임 신청하기 ${icon('arrow',18)}</button>`)}
 async function submitApplication(id){if(!$('#agree').checked){toast('신청 안내에 동의해 주세요.');return}await mutate(async()=>{await api('applications','POST',{eventId:id});sessionStorage.removeItem('soyo-intent');closeModal();await reload();nav('success',id)})}
 function login(){return `${header('로그인')}<section class="content login-content"><div class="login-illustration">${icon('book',55)}<span>hello, soyo.</span></div>${eyebrow('YOUR STORY STARTS HERE')}<h1 class="page-title">반가워요.<br>천천히 시작해요.</h1><p class="copy">카카오 계정으로 간편하게 시작하고<br>마음에 드는 모임에 참여해 보세요.</p><button class="cta kakao" onclick="signIn()"><span class="chat-bubble"></span>카카오로 시작하기</button>${preview?'<p class="preview-note">미리보기에서는 가상 회원으로 로그인합니다.<br>실제 카카오 계정과 연결되지 않습니다.</p>':''}<p class="footnote">닉네임과 모임 신청 내역을 이용합니다.<br><button class="text-button" onclick="nav('privacy')">개인정보 안내</button></p></section>`}
 async function signIn(){if(!preview){location.href='/auth/kakao';return}demo.user={id:'demo-user',nickname:'소요 회원'};save();await reload();const intent=sessionStorage.getItem('soyo-intent');if(intent){nav('detail',intent);setTimeout(()=>requestApply(intent),50)}else nav('my')}
