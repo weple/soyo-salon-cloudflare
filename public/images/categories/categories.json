@@ -1,0 +1,44 @@
+{
+  "literature": {
+    "name": "문학 · 고전",
+    "background": "#DCE5FC",
+    "accent": "#3456A5",
+    "hero": "category-literature.webp",
+    "card": "category-literature-card.webp"
+  },
+  "philosophy": {
+    "name": "철학 · 사유",
+    "background": "#E6DDF4",
+    "accent": "#7956A2",
+    "hero": "category-philosophy.webp",
+    "card": "category-philosophy-card.webp"
+  },
+  "meditation": {
+    "name": "명상 · 마음",
+    "background": "#DAE9DB",
+    "accent": "#3E725B",
+    "hero": "category-meditation.webp",
+    "card": "category-meditation-card.webp"
+  },
+  "writing": {
+    "name": "글쓰기 · 창작",
+    "background": "#F9DECF",
+    "accent": "#CB624A",
+    "hero": "category-writing.webp",
+    "card": "category-writing-card.webp"
+  },
+  "reading": {
+    "name": "원서 읽기",
+    "background": "#F5EDC8",
+    "accent": "#9F7C29",
+    "hero": "category-reading.webp",
+    "card": "category-reading-card.webp"
+  },
+  "free": {
+    "name": "자유모임",
+    "background": "#E5E5E5",
+    "accent": "#444444",
+    "hero": "category-free.webp",
+    "card": "category-free-card.webp"
+  }
+}
