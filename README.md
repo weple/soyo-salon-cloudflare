@@ -80,7 +80,7 @@ npm run dev:worker
 
 사이트에서는 공개용 닉네임 변경을 지원합니다. 신청 시 입금자명을 선택 입력할 수 있고, Worker의 관리자 전용 신청 조회에서만 표시됩니다. 이 필드를 사용하려면 `migrations/20261109_application_depositor_name.sql`을 Supabase SQL Editor에서 실행합니다.
 
-모임 공유 주소는 `/share/모임이름-짧은코드` 형식이며, 기존 UUID 공유 주소도 계속 열립니다. 공유 코드 칼럼을 준비하려면 `migrations/20261109_event_share_codes.sql`을 Supabase SQL Editor에서 실행합니다.
+모임 공유 주소는 `/share/짧은코드` 형식이며, 기존 한글 제목과 UUID 공유 주소도 계속 열립니다. 공유 코드 칼럼을 준비하려면 `migrations/20261109_event_share_codes.sql`을 Supabase SQL Editor에서 실행합니다.
 
 자동 카카오톡 발송은 아직 연결되지 않았습니다. Kakao Login만으로는 로그인한 회원에게 임의 메시지를 보낼 수 없습니다. 자동 안내에는 카카오톡 채널과 비즈니스 메시지(알림톡) 발송 권한, 승인된 알림톡 템플릿, Solapi 등 공식 발송 대행사 계정/API 자격 증명이 필요합니다. 수신 전화번호와 메시지 수신 동의를 별도로 수집해야 하므로, 연동이 준비되기 전에는 전화번호를 받지 않습니다. 계좌번호도 사이트에 공개하지 않고, 신청을 승인한 뒤 운영자가 안내하는 흐름을 권장합니다.
 
