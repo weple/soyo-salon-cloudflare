@@ -71,7 +71,63 @@ function welcomeGuide(){return !db.user?`<section class="section welcome-section
 ].map(([n,t,p])=>`<div class="welcome-step"><span>${n}</span><div><b>${t}</b><p>${p}</p></div></div>`).join('')}</div></section>`:''}
 function home(){return `<header class="top"><div class="brand">SOYO<br>SALON</div><button class="icon" aria-label="소요살롱 소개" onclick="nav('about')">☰</button></header><div class="hero"><div class="eyebrow">逍遙 · 자유롭게 거닐다</div><h1>책에서 시작해,<br>서로의 세계를<br>만나는 시간.</h1><div class="orb"></div><p>책을 읽고, 마음에 남은 문장을 나눕니다.<br>서로 다른 생각과 삶이 만나<br>자유롭게 이야기를 이어가는 작은 모임입니다.</p><figure class="hero-photo"><img src="/images/soyo-hero.webp" width="1536" height="1024" alt="독서모임을 기다리는 세 권의 책과 세 잔의 차" fetchpriority="high"><figcaption><span>책 한 권, 차 한 잔,<br>우리의 이야기.</span></figcaption></figure></div><section class="section"><div class="section-head"><h2>지금 함께할 모임</h2><button class="small-link" onclick="nav('events')">모든 모임 보기 ↗</button></div>${db.events.filter(e=>e.status==='open').slice(0,3).map(card).join('')||'<p>현재 지금 함께할 모임이 없습니다.</p>'}</section>${welcomeGuide()}`}function empty(t){return `<div class="empty">${icon('book',32)}<p>${t}</p></div>`}
 function events(){if(filter==='원서')filter='전체';let list=db.events.filter(e=>filter==='전체'||e.category===filter);return `${header('함께 읽는 모임')}<section class="content">${eyebrow('FIND YOUR NEXT CHAPTER')}<h1 class="page-title">이번에는 어떤 책을<br>함께 읽어볼까요?</h1><p class="subcopy">읽고 싶은 마음만 있다면 충분해요.</p><div class="chiprow" aria-label="모임 분류">${['전체','문학','철학','명상','글쓰기'].map(c=>`<button class="chip ${filter===c?'on':''}" aria-pressed="${filter===c}" onclick="filter='${c}';render()">${c}</button>`).join('')}</div>${list.map(e=>card(e)).join('')||empty('이 분야의 모임을 준비하고 있어요.')}</section>`}
-function detail(){const e=db.events.find(e=>e.id===selected);if(!e)return `${header('모임')} ${empty('모임을 찾을 수 없어요.')}`;const a=db.applications.find(a=>a.event_id===e.id&&a.status!=='cancelled');return `${header('모임 이야기')}<div class="detail-cover ${e.cover_url||coverLibrary[e.book]?'with-book-cover':''}" style="background:linear-gradient(145deg,${palette(e)[0]},${palette(e)[1]})"><div class="eyebrow">SOYO SALON / ${esc(e.category)}</div><h1>${esc(e.title)}<br>${esc(e.book)}</h1><p>함께 읽고, 생각을 나누는 시간.</p>${coverImage(e,true)}</div><section class="content detail-content"><div class="card-meta"><span>${esc(e.category)} 모임</span><span class="status">${state(e)}</span></div><h1 class="detail-title">${esc(e.title)}</h1><p class="subcopy">『${esc(e.book)}』${e.author?' · '+esc(e.author):''}</p>${coverLibrary[e.book]?`<a class="edition-link" href="${coverLibrary[e.book].url}" target="_blank" rel="noopener noreferrer">표지 판본 · ${esc(coverLibrary[e.book].edition)} ↗</a><p class="edition-note">표지는 예시 판본입니다. 가지고 계신 책으로 함께 읽어도 좋아요.</p>`:''}<div class="info"><div>${icon('calendar')}<p><b>${date(e.date)}</b><span>${time(e.date)}${e.end_time?' – '+esc(e.end_time):''}</span></p></div><div>${icon('pin')}<p><b>${esc(e.place)}</b><span>참여 확정 후 MY에서 모임 정보를 확인하세요.</span></p></div><div>${icon('cup')}<p><b>참가비 무료</b><span>음료는 각자 직접 결제해 주세요.<br>준비물은 책과 필기도구입니다.</span></p></div></div><h2>이런 이야기를 나눠요</h2><p class="copy">${esc(e.description)}</p><div class="guidance"><b>처음 오시는 분도 환영해요</b><p>완독하지 않아도 괜찮아요.<br>마음에 남은 문장과 질문 하나를 가져와 주세요.</p></div><h2>신청은 이렇게 진행돼요</h2><div class="guidance"><b>참여보증금 안내</b><p>모임 2일 전까지 취소하면 전액 환불됩니다.<br>하루 전·당일 취소 또는 노쇼 시 전액 기부됩니다.<br>운영자 사정으로 취소되면 전액 환불됩니다.</p></div><div class="steps"><span>01 신청하기</span><i>→</i><span>02 운영자 확인</span><i>→</i><span>03 참여 확정</span></div><p class="footnote">신청 상태는 MY에서 확인할 수 있어요.</p><h2>함께한 분들의 후기</h2>${publicReviews.filter(r=>r.event_id===e.id).map(r=>`<article class="my-card"><b>${'★'.repeat(r.rating)}</b><p>${esc(r.body)}</p><small>${esc(r.users?.nickname||'소요 회원')}</small></article>`).join('')||'<p class="footnote">아직 후기가 없습니다.</p>'}</section><div class="bottom-action"><div><small>함께 읽는 시간</small><b>무료</b></div><button class="cta" onclick="${a?"nav('my')":`requestApply('${e.id}')`}" ${!a&&state(e)!=='모집 중'?'disabled':''}>${a?label[a.status]:state(e)==='모집 중'?'모임 신청하기':state(e)} ${icon('arrow',18)}</button></div>`}
+function detail(){
+  const e=db.events.find(e=>e.id===selected);
+  if(!e)return `${header('모임 상세')} ${empty('모임을 찾을 수 없어요.')}`;
+  const a=db.applications.find(a=>a.event_id===e.id&&a.status!=='cancelled');
+  const bookCover=coverImage(e,true);
+  const dateLabel=date(e.date);
+  const deposit='5,000원';
+  return `${header('모임 상세')}
+    <section class="detail-hero">
+      <img class="detail-hero-image" src="/images/soyo-hero.webp" alt="" aria-hidden="true">
+      <div class="detail-hero-shade"></div>
+      <div class="detail-hero-copy">
+        <span class="detail-category">${esc(e.category)} 모임</span>
+        <h1>${esc(e.book?`『${e.book}』`:e.title)}</h1>
+        <p>${esc(e.title)}</p>
+        <span class="detail-rule"></span>
+      </div>
+    </section>
+    <section class="detail-summary" aria-label="모임 정보">
+      <div>${icon('calendar',22)}<p><b>${esc(dateLabel)}</b><span>${time(e.date)}${e.end_time?' – '+esc(e.end_time):''}</span></p></div>
+      <div>${icon('pin',22)}<p><b>${esc(e.place)}</b><span>모임 장소</span></p></div>
+      <div>${icon('cup',22)}<p><b>참여보증금</b><span>${deposit} · 음료 각자 주문</span></p></div>
+    </section>
+    <section class="content detail-content">
+      <div class="detail-section">
+        <h2 class="detail-section-title">모임 소개</h2>
+        <div class="detail-intro">
+          <p class="copy">${esc(e.description||'함께 책을 읽고, 생각과 마음을 나누는 시간입니다.')}</p>
+          ${bookCover?`<div class="detail-intro-cover">${bookCover}</div>`:''}
+        </div>
+        ${coverLibrary[e.book]?`<a class="edition-link" href="${coverLibrary[e.book].url}" target="_blank" rel="noopener noreferrer">표지 판본 · ${esc(coverLibrary[e.book].edition)} ↗</a><p class="edition-note">표지는 예시 판본입니다. 가지고 계신 책으로 함께 읽어도 좋아요.</p>`:''}
+      </div>
+      <div class="detail-section">
+        <h2 class="detail-section-title">함께 나눌 이야기</h2>
+        <div class="discussion-prompts">
+          <p><span>1</span>책에서 가장 오래 마음에 남은 문장은 무엇인가요?</p>
+          <p><span>2</span>그 문장이 내 경험이나 지금의 삶과 어떻게 이어지나요?</p>
+          <p><span>3</span>함께 읽은 사람들의 생각 중 새롭게 발견한 점은 무엇인가요?</p>
+        </div>
+      </div>
+      <div class="detail-section">
+        <h2 class="detail-section-title">참여 안내</h2>
+        <ul class="detail-guide">
+          <li>완독하지 않아도 편안하게 참여할 수 있어요.</li>
+          <li>책과 필기도구를 준비해 주세요.</li>
+          <li>신청 승인 후 24시간 이내 참여보증금을 입금해 주세요.</li>
+          <li>모임 참석 시 종료 후 전액 환불됩니다.</li>
+          <li>모임 2일 전까지 취소하면 전액 환불되며, 하루 전·당일 취소 또는 노쇼는 전액 기부됩니다.</li>
+          <li>운영자 사정으로 모임이 취소되면 전액 환불됩니다.</li>
+        </ul>
+      </div>
+      <div class="guidance"><b>처음 오시는 분도 환영해요</b><p>완독하지 않아도 괜찮아요. 마음에 남은 문장이나 질문 하나를 가져와 주세요.</p></div>
+      <h2>함께한 분들의 후기</h2>
+      ${publicReviews.filter(r=>r.event_id===e.id).map(r=>`<article class="my-card"><b>${'★'.repeat(r.rating)}</b><p>${esc(r.body)}</p><small>${esc(r.users?.nickname||'소요 회원')}</small></article>`).join('')||'<p class="footnote">아직 후기가 없습니다.</p>'}
+    </section>
+    <div class="bottom-action"><div><small>참여보증금</small><b>${deposit}</b></div><button class="cta" onclick="${a?"nav('my')":`requestApply('${e.id}')`}" ${!a&&state(e)!=='모집 중'?'disabled':''}>${a?label[a.status]:state(e)==='모집 중'?'모임 신청하기':state(e)} ${icon('arrow',18)}</button></div>`
+}
 function requestApply(id){sessionStorage.setItem('soyo-intent',id);if(!db.user){nav('login');return}const e=db.events.find(e=>e.id===id);openModal(`<span class="modal-symbol">${icon('book',30)}</span><h2>함께 읽어볼까요?</h2><p>『${esc(e.book)}』<br>${date(e.date)} · ${time(e.date)}</p><div class="guidance">참여보증금은 5,000원입니다.<br>신청 승인 후 입금 안내를 확인해 주세요.<br>승인 후 24시간 이내 입금해 주세요.<br>참석 시 모임 종료 후 전액 환불됩니다.</div><label class="consent"><input id="agree" type="checkbox"> 신청 및 참석 확인을 위한 닉네임 이용에 동의합니다.</label><button class="cta" onclick="submitApplication('${id}')">이 모임 신청하기 ${icon('arrow',18)}</button>`)}
 async function submitApplication(id){if(!$('#agree').checked){toast('신청 안내에 동의해 주세요.');return}await mutate(async()=>{await api('applications','POST',{eventId:id});sessionStorage.removeItem('soyo-intent');closeModal();await reload();nav('success',id)})}
 function login(){return `${header('로그인')}<section class="content login-content"><div class="login-illustration">${icon('book',55)}<span>hello, soyo.</span></div>${eyebrow('YOUR STORY STARTS HERE')}<h1 class="page-title">반가워요.<br>천천히 시작해요.</h1><p class="copy">카카오 계정으로 간편하게 시작하고<br>마음에 드는 모임에 참여해 보세요.</p><button class="cta kakao" onclick="signIn()"><span class="chat-bubble"></span>카카오로 시작하기</button>${preview?'<p class="preview-note">미리보기에서는 가상 회원으로 로그인합니다.<br>실제 카카오 계정과 연결되지 않습니다.</p>':''}<p class="footnote">닉네임과 모임 신청 내역을 이용합니다.<br><button class="text-button" onclick="nav('privacy')">개인정보 안내</button></p></section>`}
