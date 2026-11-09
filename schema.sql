@@ -9,6 +9,11 @@ alter table public.events add column if not exists author text not null default 
 alter table public.events add column if not exists place_address text not null default '';
 alter table public.events add column if not exists book_description text not null default '';
 alter table public.events add column if not exists yes24_url text not null default '';
+alter table public.events add column if not exists share_code text;
+update public.events set share_code=substr(replace(id::text,'-',''),1,12) where share_code is null or share_code='';
+alter table public.events alter column share_code set default substr(replace(gen_random_uuid()::text,'-',''),1,12);
+alter table public.events alter column share_code set not null;
+create unique index if not exists events_share_code_unique_idx on public.events(share_code);
 alter table public.reviews add column if not exists photos jsonb not null default '[]'::jsonb;
 alter table public.book_reviews add column if not exists photos jsonb not null default '[]'::jsonb;
 create table if not exists public.reviews(id uuid primary key default gen_random_uuid(),event_id uuid not null references public.events(id) on delete cascade,user_id uuid not null references public.users(id) on delete cascade,rating int not null check(rating between 1 and 5),body text not null check(length(body) between 1 and 3000),created_at timestamptz not null default now(),unique(event_id,user_id));
