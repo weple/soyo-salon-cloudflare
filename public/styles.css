@@ -135,3 +135,7 @@
 .home-hero-card .hero-art{border-radius:0}
 @media(max-width:370px){.home-hero-card{margin:10px 10px 0;border-radius:26px}}
 @media(min-width:800px){.home-hero-card{margin:22px 24px 0;border-radius:38px}.home-hero-card .home-top{padding-left:42px;padding-right:42px}.home-hero-card .home-hero{padding-left:42px;padding-right:42px}}
+/* Keep recruitment titles on one line and give the category art stronger edge contrast. */
+.home-event-info>strong{display:block;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:normal;line-height:1.45}
+.home-event-card:before{background:linear-gradient(90deg,#f4eee8ed 0%,#f4eee8a8 28%,#f4eee850 62%,#39332e35 100%)}
+.home-event-info .event-meta svg{color:#635b55}
