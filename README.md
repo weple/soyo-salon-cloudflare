@@ -19,7 +19,7 @@
 ## 1. Supabase
 
 1. 자신의 Supabase 계정에서 프로젝트를 만듭니다.
-2. SQL Editor에서 `schema.sql`을 실행합니다. 기존 테이블과 함수를 유지/갱신하는 스키마입니다.
+2. SQL Editor에서 `schema.sql`을 실행합니다. 기존 테이블과 함수를 유지/갱신하는 스키마입니다. 후기와 서평 테이블 및 표지 칼럼 추가를 위해 변경 후에도 한 번 더 실행해야 합니다.
 3. Project URL과 `Secret key`(`sb_secret_...`)를 Worker 비밀값 `SUPABASE_SECRET_KEY`로 저장합니다. 기존 legacy `service_role` 키도 `SUPABASE_SERVICE_ROLE_KEY` 이름으로 호환됩니다. 어느 키든 브라우저 코드에는 입력하지 않습니다.
 4. 최초 모임은 Table Editor의 `events` 또는 로그인 후 관리자 화면에서 추가합니다.
 5. 카카오 로그인 후 `users.kakao_id`에서 본인의 ID를 확인하여 관리자 허용 목록에 설정합니다.

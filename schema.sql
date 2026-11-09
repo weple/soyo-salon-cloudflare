@@ -3,10 +3,15 @@ create extension if not exists pgcrypto;
 create table if not exists public.users(id uuid primary key default gen_random_uuid(),kakao_id text not null unique,nickname text not null,created_at timestamptz not null default now());
 create table if not exists public.events(id uuid primary key default gen_random_uuid(),title text not null,book text not null default '',category text not null default '문학',date timestamptz not null,end_time text not null default '',place text not null,description text not null default '',capacity int not null check(capacity between 1 and 100),color text not null default '#4055D8',accent text not null default '#D66A48',status text not null default 'open' check(status in ('open','closed','soon')),created_at timestamptz not null default now());
 create table if not exists public.applications(id uuid primary key default gen_random_uuid(),event_id uuid not null references public.events(id) on delete cascade,user_id uuid not null references public.users(id) on delete cascade,status text not null default 'pending' check(status in ('pending','confirmed','waitlist','cancelled')),created_at timestamptz not null default now(),unique(event_id,user_id));
+alter table public.events add column if not exists cover_url text not null default '';
+create table if not exists public.reviews(id uuid primary key default gen_random_uuid(),event_id uuid not null references public.events(id) on delete cascade,user_id uuid not null references public.users(id) on delete cascade,rating int not null check(rating between 1 and 5),body text not null check(length(body) between 1 and 3000),created_at timestamptz not null default now(),unique(event_id,user_id));
+create table if not exists public.book_reviews(id uuid primary key default gen_random_uuid(),user_id uuid not null references public.users(id) on delete cascade,book_title text not null check(length(book_title) between 1 and 160),body text not null check(length(body) between 1 and 3000),created_at timestamptz not null default now());
 create index if not exists applications_event_status_idx on public.applications(event_id,status);
 alter table public.users enable row level security;
 alter table public.events enable row level security;
 alter table public.applications enable row level security;
+alter table public.reviews enable row level security;
+alter table public.book_reviews enable row level security;
 -- 공개 anon 정책 없음. 모든 데이터 접근은 인증된 Cloudflare Worker의 service_role을 통해서만.
 create or replace function public.apply_to_event(p_user_id uuid,p_event_id uuid) returns uuid language plpgsql security invoker as $$
 declare v_event public.events%rowtype; v_existing public.applications%rowtype; v_id uuid;
