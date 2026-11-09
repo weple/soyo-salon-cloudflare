@@ -13,6 +13,6 @@
     ]
   },
   "vars": {
-    "PUBLIC_ORIGIN": "https://soyo-salon.withweple.workers.dev"
+    "PUBLIC_ORIGIN": "https://soyo-salon.com"
   }
 }

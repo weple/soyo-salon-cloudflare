@@ -41,7 +41,7 @@ npm install
 npx wrangler login
 ```
 
-`wrangler.jsonc`의 `PUBLIC_ORIGIN`을 실제 Workers 주소 또는 커스텀 도메인으로 바꿉니다. 끝에 `/`를 붙이지 않습니다.
+`wrangler.jsonc`의 `PUBLIC_ORIGIN`은 운영 도메인(`https://soyo-salon.com`)으로 설정합니다. 끝에 `/`를 붙이지 않습니다. 카카오 개발자 콘솔의 Redirect URI와 동의항목 설정에도 `https://soyo-salon.com/auth/callback`을 등록해야 합니다.
 
 ```sh
 npx wrangler secret put SUPABASE_URL
