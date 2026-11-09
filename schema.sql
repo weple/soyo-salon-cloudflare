@@ -10,12 +10,23 @@ alter table public.reviews add column if not exists photos jsonb not null defaul
 alter table public.book_reviews add column if not exists photos jsonb not null default '[]'::jsonb;
 create table if not exists public.reviews(id uuid primary key default gen_random_uuid(),event_id uuid not null references public.events(id) on delete cascade,user_id uuid not null references public.users(id) on delete cascade,rating int not null check(rating between 1 and 5),body text not null check(length(body) between 1 and 3000),created_at timestamptz not null default now(),unique(event_id,user_id));
 create table if not exists public.book_reviews(id uuid primary key default gen_random_uuid(),user_id uuid not null references public.users(id) on delete cascade,book_title text not null check(length(book_title) between 1 and 160),body text not null check(length(body) between 1 and 3000),created_at timestamptz not null default now());
+create table if not exists public.reading_notes(id uuid primary key default gen_random_uuid(),user_id uuid not null references public.users(id) on delete cascade,book_title text not null check(length(book_title) between 1 and 160),body text not null check(length(body) between 1 and 1600),photos jsonb not null default '[]'::jsonb check(jsonb_typeof(photos)='array' and jsonb_array_length(photos)<=3),created_at timestamptz not null default now());
+create table if not exists public.reading_note_likes(id uuid primary key default gen_random_uuid(),reading_note_id uuid not null references public.reading_notes(id) on delete cascade,user_id uuid not null references public.users(id) on delete cascade,created_at timestamptz not null default now(),unique(reading_note_id,user_id));
+create table if not exists public.reading_note_comments(id uuid primary key default gen_random_uuid(),reading_note_id uuid not null references public.reading_notes(id) on delete cascade,user_id uuid not null references public.users(id) on delete cascade,body text not null check(length(body) between 1 and 600),created_at timestamptz not null default now());
+create table if not exists public.private_notes(id uuid primary key default gen_random_uuid(),user_id uuid not null references public.users(id) on delete cascade,book_title text not null default '' check(length(book_title)<=160),body text not null check(length(body) between 1 and 3000),created_at timestamptz not null default now());
 create index if not exists applications_event_status_idx on public.applications(event_id,status);
+create index if not exists reading_notes_created_at_idx on public.reading_notes(created_at desc);
+create index if not exists reading_note_comments_note_idx on public.reading_note_comments(reading_note_id,created_at);
+create index if not exists private_notes_owner_created_idx on public.private_notes(user_id,created_at desc);
 alter table public.users enable row level security;
 alter table public.events enable row level security;
 alter table public.applications enable row level security;
 alter table public.reviews enable row level security;
 alter table public.book_reviews enable row level security;
+alter table public.reading_notes enable row level security;
+alter table public.reading_note_likes enable row level security;
+alter table public.reading_note_comments enable row level security;
+alter table public.private_notes enable row level security;
 -- 공개 anon 정책 없음. 모든 데이터 접근은 인증된 Cloudflare Worker의 service_role을 통해서만.
 create or replace function public.apply_to_event(p_user_id uuid,p_event_id uuid) returns uuid language plpgsql security invoker as $$
 declare v_event public.events%rowtype; v_existing public.applications%rowtype; v_id uuid;
