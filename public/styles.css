@@ -211,6 +211,9 @@
 .bottom-action .deposit-note b{font-size:17px;line-height:1.2;color:#3d352f}
 .bottom-action .deposit-note small{font-size:10px;line-height:1.35;color:#81786f;white-space:nowrap}
 .bottom-action .cta{flex:1;min-width:0;white-space:nowrap}
+.bottom-action .deposit-note{align-items:center;text-align:center;min-width:74px}
+.bottom-action .deposit-note b{font-size:15px;line-height:1.2}
+.bottom-action .deposit-note small{font-size:11px;white-space:nowrap}
 .detail-guide strong,.detail-page .guidance p strong{font-weight:750;color:#40342b}
 .record-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:600px){
