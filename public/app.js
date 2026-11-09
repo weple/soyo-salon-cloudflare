@@ -15,7 +15,7 @@ window.readingNotes=window.readingNotes||[];
 window.privateNotes=window.privateNotes||[];window.noteComments=window.noteComments||{};
 function cachedPublicEvents(){try{const cached=JSON.parse(sessionStorage.getItem('soyo-public-events')||'null');return cached&&Date.now()-cached.savedAt<900000&&Array.isArray(cached.events)?cached.events:[]}catch{return []}}
 let db={events:cachedPublicEvents(),applications:[],user:null,admin:false},adminApplications=[],publicReviews=[],myReviews=[],publicReadingNotes=[],privateNotes=[],expandedReadingNotes=new Set(),filter='전체',myFilter='다가오는',busy=false;
-const homeHeroImages=['/images/home-hero-1.webp','/images/home-hero-2.webp','/images/home-hero-3.webp','/images/home-hero-4.webp'];
+const homeHeroImages=['/images/home-hero-1.webp','/images/home-hero-2.webp','/images/home-hero-4.webp'];
 const homeHeroImage=homeHeroImages[Math.floor(Math.random()*homeHeroImages.length)];
 let [route='home',selected]=location.hash.slice(1).split('/');let editingEventId=null,recordTab='review',recordFormOpen=false,profileEditOpen=false;
 const save=()=>localStorage.setItem('soyo-preview-v2',JSON.stringify(demo));
