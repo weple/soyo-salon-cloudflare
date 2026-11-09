@@ -113,7 +113,7 @@
 .home-top .icon{background:transparent;font-size:25px}
 .hero.home-hero{position:relative;isolation:isolate;min-height:365px;padding:38px 28px 28px;overflow:hidden;background:#faf8f5}
 .home-hero .eyebrow{font-family:'Noto Serif KR',serif;font-size:12px;letter-spacing:1.2px;color:#282522}
-.home-hero .eyebrow:after{content:'';display:block;width:150px;height:4px;margin-top:-2px;border-radius:20px;background:#f3dfc0;opacity:.65}
+.home-hero .eyebrow:after{content:'';display:block;width:16.5em;height:7px;margin-top:-4px;border-radius:20px;background:#f3dfc0;opacity:.65}
 .home-hero h1{position:relative;z-index:1;max-width:82%;font-family:'Noto Serif KR',serif;font-size:39px;font-weight:600;line-height:1.45;letter-spacing:-1.6px;margin:25px 0 18px;word-break:keep-all}
 .home-hero p{position:relative;z-index:1;max-width:82%;font-size:13px;line-height:1.95;color:#514d4b;word-break:keep-all}
 .hero-art{position:absolute;z-index:0;right:-40px;top:12px;width:66%;height:94%;overflow:hidden;border-radius:54% 0 0 48% / 49% 0 0 46%;background:#dce5fc}
