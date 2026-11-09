@@ -150,11 +150,17 @@
 @media(max-width:370px){
   .home-hero-card .home-top{padding-top:18px;padding-bottom:10px}
   .home-hero-card .home-hero{min-height:330px;padding-top:29px}
-  .home-hero-card .hero-art{inset:0 10px 0;border-radius:0 0 32px 32px}
-  .home-hero-card .hero-art img{border-radius:0 0 32px 32px}
   .home-category-grid{padding-left:12px;padding-right:12px;gap:8px}
   .home-category{flex-basis:74px;min-width:74px;width:74px;min-height:74px}
 }
+/* Organic arch cutout for the hero art, instead of rounded rectangle corners. */
+@media(max-width:600px){
+  .home-hero-card .home-hero{isolation:isolate}
+  .home-hero-card .hero-art{inset:0 12px 0 0;overflow:hidden;border-radius:0;clip-path:ellipse(100% 88% at 100% 12%)}
+  .home-hero-card .hero-art img{border-radius:0;object-position:62% center}
+  .home-hero-card .hero-art:after{background:linear-gradient(90deg,#faf8f5e8 0%,#faf8f5a8 32%,#faf8f529 56%,transparent 78%)}
+}
+@media(max-width:370px){.home-hero-card .hero-art{inset:0 10px 0 0;clip-path:ellipse(108% 90% at 105% 10%)}}
 /* Keep recruitment titles on one line and give the category art stronger edge contrast. */
 .home-event-info>strong{display:block;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:normal;line-height:1.45}
 .home-event-card:before{background:linear-gradient(90deg,#f4eee8ed 0%,#f4eee8a8 28%,#f4eee850 62%,#39332e35 100%)}
