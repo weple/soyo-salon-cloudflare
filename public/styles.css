@@ -218,6 +218,8 @@
 .event-info strong{color:#202126}
 a:link,a:visited{color:inherit}
 .edition-link,.edition-link:link,.edition-link:visited{color:#6045c2}
+.admin-private-field{display:block;margin-top:8px;color:#766b5e;font-size:12px}
+.profile-edit{margin:-10px 0 28px;padding:17px;background:#fff;border:1px solid #ece8e2;border-radius:18px}
 .detail-guide strong,.detail-page .guidance p strong{font-weight:750;color:#40342b}
 .record-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:600px){
