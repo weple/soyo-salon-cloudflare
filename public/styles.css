@@ -255,3 +255,11 @@ a:link,a:visited{color:inherit}
 .detail-share-button{position:absolute;z-index:3;top:16px;right:18px;display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid #ffffffb8;border-radius:99px;background:#fffdf4d9;color:#332f2c;font-size:12px;font-weight:700;box-shadow:0 4px 14px #33271a12;backdrop-filter:blur(10px)}.detail-share-button:active{transform:scale(.97)}
 .login-illustration{height:auto;background:transparent;color:inherit;gap:8px}.login-illustration img{display:block;width:145px;height:145px;object-fit:contain;border-radius:32px;margin:0 auto}.login-illustration span{font-size:15px}
 @media(max-width:799px){#app :where(.pill,.tab,.status,.tabs .tab span,.bottom-action small,.my-heading span,.preview-ribbon,.preview-ribbon button,.steps,.hero-photo figcaption>a,.detail-cover .eyebrow,.edition-note,.records-intro .eyebrow,.record-form-foot>span,.record-tag,.record-card-foot small,.record-actions button,.record-tabs button span,.event-state,.event-meta,.detail-summary p,.detail-summary p b,.detail-summary p span,.detail-summary p span small,.bottom-action .deposit-note small,.free-badge,.event-category-chip,.event-author,.detail-event-name span,.detail-summary-item p small,.home-open-heading>div>span,.home-event-badges .event-state,.home-event-info .event-meta,.home-open-heading>button,.home-category span,.records-page .record-tabs button,.records-page .record-tabs button span,.social-button b,.reading-comment small,.reading-comment button){font-size:max(12px,.75em)!important}}
+@media(max-width:600px){
+  .home-actions{display:flex;align-items:center;gap:12px}
+  .home-bell,.home-top .icon{box-sizing:border-box;display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;padding:0;line-height:1}
+  .home-bell svg{width:24px;height:24px}
+  .home-top .icon{font-size:24px}
+  .home-category-grid{box-sizing:border-box;width:calc(100% - 24px);margin:0 12px;padding:16px 0 18px;gap:10px}
+}
+@media(max-width:370px){.home-category-grid{width:calc(100% - 20px);margin:0 10px;padding:16px 0 18px;gap:8px}}

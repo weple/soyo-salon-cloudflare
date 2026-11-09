@@ -131,7 +131,6 @@ function detail(){
       <div class="detail-hero-copy">
         <span class="detail-category">${esc(categoryTitle(e))}</span>
         <h1>${esc(e.book?`『${e.book}』`:e.title)}</h1>
-        ${e.author?`<span class="detail-author">저자 · ${esc(e.author)}</span>`:''}
         <p class="detail-event-name"><span>모임</span><b>${esc(e.title)}</b></p>
         <span class="detail-rule"></span>
       </div>
