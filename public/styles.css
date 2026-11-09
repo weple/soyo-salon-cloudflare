@@ -137,20 +137,23 @@
 @media(min-width:800px){.home-hero-card{margin:22px 24px 0;border-radius:38px}.home-hero-card .home-top{padding-left:42px;padding-right:42px}.home-hero-card .home-hero{padding-left:42px;padding-right:42px}}
 @media(max-width:600px){.home-hero-card{margin:12px 12px 0;border-radius:34px}.home-hero-card .home-top{padding-top:24px;padding-bottom:14px}.home-hero-card .home-hero{min-height:350px;padding-top:34px}.home-category-grid{padding-top:20px;padding-bottom:16px;gap:9px}.home-category{flex-basis:78px;min-width:78px;min-height:82px;gap:6px;padding:8px 4px;border-radius:23px}.home-category svg{width:27px;height:27px;stroke-width:1.25}.home-category span{font-size:9px}}
 @media(max-width:370px){.home-hero-card{margin:10px 10px 0;border-radius:29px}.home-hero-card .home-top{padding-top:20px;padding-bottom:11px}.home-hero-card .home-hero{min-height:330px}.home-category{flex-basis:72px;min-width:72px;min-height:76px}.home-category svg{width:25px;height:25px}}
-/* Align the mobile category rail to the inset hero card and shape the whole header panel. */
+/* Round the artwork itself, leaving the brand header outside its clipping shape. */
 @media(max-width:600px){
-  .home-hero-card{margin:16px 16px 0;border:1px solid #fff;border-radius:36px;background:linear-gradient(180deg,#fffdfa 0%,#faf8f5 100%);box-shadow:0 14px 36px #3b30251a,0 2px 8px #3b30250a}
-  .home-hero-card .home-top{min-height:88px;padding:20px 24px 14px;background:linear-gradient(180deg,#fffdfa 0%,#fbf9f6 100%)}
-  .home-hero-card .home-hero{min-height:350px;padding:32px 24px 28px;background:transparent}
-  .home-category-grid{margin:0;padding:18px 16px 18px;gap:10px}
-  .home-category{flex-basis:76px;min-width:76px;min-height:78px;border-radius:20px}
+  .home-hero-card{margin:0;overflow:visible;border:0;border-radius:0;background:transparent;box-shadow:none}
+  .home-hero-card .home-top{padding-top:22px;padding-bottom:12px;background:#faf8f5}
+  .home-hero-card .home-hero{min-height:350px;padding-top:32px;background:transparent}
+  .home-hero-card .hero-art{inset:0 12px 0;border-radius:0 0 38px 38px}
+  .home-hero-card .hero-art img{border-radius:0 0 38px 38px}
+  .home-category-grid{box-sizing:border-box;width:100%;margin:0;padding:16px 16px 18px;gap:10px}
+  .home-category{box-sizing:border-box;flex:0 0 78px;min-width:78px;width:78px;min-height:78px;border-radius:20px}
 }
 @media(max-width:370px){
-  .home-hero-card{margin:12px 12px 0;border-radius:31px}
-  .home-hero-card .home-top{min-height:80px;padding:17px 20px 12px}
-  .home-hero-card .home-hero{min-height:330px;padding:29px 20px 24px}
+  .home-hero-card .home-top{padding-top:18px;padding-bottom:10px}
+  .home-hero-card .home-hero{min-height:330px;padding-top:29px}
+  .home-hero-card .hero-art{inset:0 10px 0;border-radius:0 0 32px 32px}
+  .home-hero-card .hero-art img{border-radius:0 0 32px 32px}
   .home-category-grid{padding-left:12px;padding-right:12px;gap:8px}
-  .home-category{flex-basis:72px;min-width:72px;min-height:74px}
+  .home-category{flex-basis:74px;min-width:74px;width:74px;min-height:74px}
 }
 /* Keep recruitment titles on one line and give the category art stronger edge contrast. */
 .home-event-info>strong{display:block;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:normal;line-height:1.45}
