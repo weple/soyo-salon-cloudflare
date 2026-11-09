@@ -8,6 +8,7 @@ alter table public.events add column if not exists cover_url text not null defau
 alter table public.events add column if not exists author text not null default '';
 alter table public.events add column if not exists place_address text not null default '';
 alter table public.events add column if not exists book_description text not null default '';
+alter table public.events add column if not exists discussion_questions text not null default '';
 alter table public.events add column if not exists yes24_url text not null default '';
 alter table public.events add column if not exists share_code text;
 update public.events set share_code=substr(replace(id::text,'-',''),1,12) where share_code is null or share_code='';
