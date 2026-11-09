@@ -128,3 +128,10 @@
 .hero-art img{object-fit:cover;object-position:center;filter:none}
 .hero-sun,.hero-coral{display:none}
 @media(max-width:600px){.hero-art img{object-position:58% center}.hero-art:after{background:linear-gradient(90deg,#faf8f58c 0%,#faf8f52e 48%,transparent 78%)}}
+/* Rounded, inset hero panel matching the supplied mobile reference. */
+.home-hero-card{margin:14px 14px 0;overflow:hidden;border-radius:32px;background:#faf8f5;box-shadow:0 10px 34px #27201a0b}
+.home-hero-card .home-top{padding-left:25px;padding-right:25px}
+.home-hero-card .home-hero{border-radius:0}
+.home-hero-card .hero-art{border-radius:0}
+@media(max-width:370px){.home-hero-card{margin:10px 10px 0;border-radius:26px}}
+@media(min-width:800px){.home-hero-card{margin:22px 24px 0;border-radius:38px}.home-hero-card .home-top{padding-left:42px;padding-right:42px}.home-hero-card .home-hero{padding-left:42px;padding-right:42px}}
