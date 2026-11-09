@@ -165,4 +165,3 @@
 .home-event-info>strong{display:block;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:normal;line-height:1.45}
 .home-event-card:before{background:linear-gradient(90deg,#f4eee8ed 0%,#f4eee8a8 28%,#f4eee850 62%,#39332e35 100%)}
 .home-event-info .event-meta svg{color:#635b55}
-.home-category{background-color:var(--category-background);background-image:linear-gradient(90deg,#fff9 0%,#fff5 100%),var(--category-image);background-position:center;background-size:cover}
