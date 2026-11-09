@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
 import {createHmac} from 'node:crypto';
 import worker from '../src/index.js';
 const env={PUBLIC_ORIGIN:'https://soyo.test',SESSION_SECRET:'test-secret-only',SUPABASE_URL:'https://db.test',SUPABASE_SECRET_KEY:'sb_secret_test',ADMIN_KAKAO_IDS:'123',ASSETS:{fetch:()=>new Response('asset')}};
@@ -8,6 +9,7 @@ const request=(path,options={})=>new Request('https://soyo.test'+path,options);
 test('cross-origin writes rejected even when request URL is legitimate',async()=>{const r=await worker.fetch(request('/api/logout',{method:'POST',headers:{Origin:'https://attacker.test'}}),env);assert.equal(r.status,403)});
 test('application JavaScript and styles can use the browser cache briefly',async()=>{for(const path of ['/app.js','/styles.css','/config.js']){const r=await worker.fetch(request(path),env);assert.equal(r.status,200);assert.match(r.headers.get('cache-control'),/max-age=300/);assert.match(r.headers.get('cache-control'),/stale-while-revalidate/)}});
 test('event share link returns crawler-readable social preview and app redirect',async()=>{const orig=globalThis.fetch;let dbUrl;globalThis.fetch=async u=>{dbUrl=u;return new Response(JSON.stringify([{id:'11111111-1111-4111-8111-111111111111',title:'고요한 만남',book:'책과 마음',category:'명상',date:'2026-12-20T05:00:00Z',place:'연암다원',description:'차와 함께 생각을 나눕니다.'}]))};try{const r=await worker.fetch(request('/share/11111111-1111-4111-8111-111111111111'),env),html=await r.text();assert.equal(r.status,200);assert.match(dbUrl,/events\?id=eq.11111111-1111-4111-8111-111111111111/);assert.match(html,/property="og:title" content="『책과 마음』 · 고요한 만남 \| 소요살롱"/);assert.match(html,/property="og:description"/);assert.match(html,/og:image" content="https:\/\/soyo\.test\/images\/share\/category-meditation\.jpg/);assert.match(html,/location\.replace\('\/#detail\/11111111-1111-4111-8111-111111111111'\)/)}finally{globalThis.fetch=orig}});
+test('share routes reach the Worker before SPA asset fallback',async()=>{const config=JSON.parse(await readFile(new URL('../wrangler.jsonc',import.meta.url),'utf8'));assert.ok(config.assets.run_worker_first.includes('/share/*'))});
 test('missing Origin write rejected',async()=>assert.equal((await worker.fetch(request('/api/logout',{method:'POST'}),env)).status,403));
 test('unauthenticated application rejected',async()=>assert.equal((await worker.fetch(request('/api/applications',{method:'POST',headers:{Origin:env.PUBLIC_ORIGIN,'content-type':'application/json'},body:'{}'}),env)).status,401));
 test('ordinary member cannot read admin applications',async()=>assert.equal((await worker.fetch(request('/api/admin/applications',{headers:{Cookie:cookie()}}),env)).status,403));
