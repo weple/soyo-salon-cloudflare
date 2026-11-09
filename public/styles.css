@@ -190,3 +190,9 @@
   .detail-summary{margin-left:14px;margin-right:14px}
   .detail-page .detail-content{padding-left:19px;padding-right:19px}
 }
+/* Detail hero artwork stays crisp; show free entry beside the booking CTA. */
+.detail-hero-shade{display:none}
+.bottom-action .deposit-note{min-width:88px;gap:2px}
+.bottom-action .deposit-note b{font-size:17px;line-height:1.2;color:#3d352f}
+.bottom-action .deposit-note small{font-size:10px;line-height:1.35;color:#81786f;white-space:nowrap}
+.bottom-action .cta{flex:1;min-width:0;white-space:nowrap}
