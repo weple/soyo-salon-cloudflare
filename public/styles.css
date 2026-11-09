@@ -165,3 +165,28 @@
 .home-event-info>strong{display:block;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:normal;line-height:1.45}
 .home-event-card:before{background:linear-gradient(90deg,#f4eee8ed 0%,#f4eee8a8 28%,#f4eee850 62%,#39332e35 100%)}
 .home-event-info .event-meta svg{color:#635b55}
+/* Mobile event detail layout draft: readable title, stacked facts, clear sticky controls. */
+@media(max-width:600px){
+  .detail-page .detail-hero{min-height:300px;padding:28px 24px 46px;align-items:flex-end}
+  .detail-hero-image{object-position:68% center}
+  .detail-hero-shade{background:linear-gradient(90deg,#f6eee7f2 0%,#f6eee7dc 52%,#f6eee78c 100%),linear-gradient(0deg,#f6eee79c 0%,transparent 56%)}
+  .detail-hero-copy{width:100%;max-width:100%}
+  .detail-hero-copy h1{max-width:100%;font-size:clamp(27px,7.2vw,33px);line-height:1.3;letter-spacing:-.8px;word-break:keep-all;overflow-wrap:normal}
+  .detail-hero-copy p{font-size:14px;line-height:1.6}
+  .detail-summary{grid-template-columns:minmax(0,1fr);margin:-18px 18px 0;padding:5px 14px;border-radius:22px}
+  .detail-summary>div,.detail-summary>.detail-place-link{display:grid;grid-template-columns:30px minmax(0,1fr);justify-content:initial;align-items:center;gap:10px;min-height:62px;padding:8px 3px}
+  .detail-summary>div+div,.detail-summary>.detail-place-link{border-left:0;border-top:1px solid #eee8e1}
+  .detail-summary svg{width:22px;height:22px}
+  .detail-summary p{gap:3px;font-size:13px;line-height:1.4}
+  .detail-summary p b{font-size:13px;overflow-wrap:normal}
+  .detail-summary p span{font-size:11px;overflow-wrap:normal}
+  .detail-page .detail-content{padding:26px 22px calc(280px + env(safe-area-inset-bottom))}
+  .bottom-action{background:#fffdfa;border-color:#eee8e2;backdrop-filter:none;box-shadow:0 8px 28px #30251b18}
+  .detail-page #app{padding-bottom:calc(220px + env(safe-area-inset-bottom))}
+}
+@media(max-width:370px){
+  .detail-page .detail-hero{min-height:280px;padding-left:20px;padding-right:20px}
+  .detail-hero-copy h1{font-size:27px}
+  .detail-summary{margin-left:14px;margin-right:14px}
+  .detail-page .detail-content{padding-left:19px;padding-right:19px}
+}
