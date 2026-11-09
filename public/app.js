@@ -124,14 +124,13 @@ function detail(){
       <div class="detail-section">
         <h2 class="detail-section-title">참여 안내</h2>
         <ul class="detail-guide">
-          <li>완독하지 않아도 편안하게 참여할 수 있어요.</li>
-          <li>신청 승인 후 24시간 이내 참여보증금을 입금해 주세요.</li>
-          <li>모임 참석 시 종료 후 전액 환불됩니다.</li>
-          <li>모임 2일 전까지 취소하면 전액 환불되며, 하루 전·당일 취소 또는 노쇼 시 보증금 전액을 어려운 이웃에게 기부합니다.</li>
-          <li>운영자 사정으로 모임이 취소되면 전액 환불됩니다.</li>
+          <li><strong>신청 승인 후 24시간 이내</strong> 참여보증금을 입금해 주세요.</li>
+          <li>모임 참석 시 <strong>종료 후 전액 환불</strong>됩니다.</li>
+          <li><strong>모임 2일 전까지 취소</strong>하면 전액 환불되며, <strong>하루 전·당일 취소 또는 노쇼</strong> 시 보증금 전액을 <strong>어려운 이웃에게 기부</strong>합니다.</li>
+          <li>운영자 사정으로 모임이 취소되면 <strong>전액 환불</strong>됩니다.</li>
         </ul>
       </div>
-      <div class="guidance"><b>처음 오시는 분도 환영해요</b><p>완독하지 않아도 괜찮아요. 마음에 남은 문장이나 질문 하나를 가져와 주세요.</p></div>
+      <div class="guidance"><b>처음 오시는 분도 환영해요</b><p><strong>완독하지 않아도 괜찮아요.</strong> 마음에 남은 문장이나 질문 하나를 함께 나눠요.</p></div>
       <h2>함께한 분들의 후기</h2>
       ${publicReviews.filter(r=>r.event_id===e.id).map(r=>`<article class="my-card"><b>${'★'.repeat(r.rating)}</b><p>${esc(r.body)}</p><small>${esc(r.users?.nickname||'소요 회원')}</small></article>`).join('')||'<p class="footnote">아직 후기가 없습니다.</p>'}
     </section>
