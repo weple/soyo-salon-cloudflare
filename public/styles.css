@@ -263,3 +263,9 @@ a:link,a:visited{color:inherit}
   .home-category-grid{box-sizing:border-box;width:calc(100% - 24px);margin:0 12px;padding:16px 0 18px;gap:10px}
 }
 @media(max-width:370px){.home-category-grid{width:calc(100% - 20px);margin:0 10px;padding:16px 0 18px;gap:8px}}
+@media(max-width:600px){
+  .home-hero-card .home-top{padding-right:14px}
+  .home-actions{align-items:center}
+  .home-top .icon{justify-content:center;align-items:center;line-height:0}
+  .home-top .icon svg{display:block;width:24px;height:24px}
+}
