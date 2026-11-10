@@ -160,8 +160,8 @@ function detail(){
       <div class="detail-section">
         <h2 class="detail-section-title">모임 소개</h2>
         <div class="detail-intro">
-          <p class="copy">${esc(e.description||'함께 책을 읽고, 생각과 마음을 나누는 시간입니다.')}</p>
           ${(e.description_images||[]).length?`<div class="event-description-gallery">${e.description_images.slice(0,3).map((url,i)=>`<img src="${esc(url)}" alt="모임 소개 이미지 ${i+1}" loading="lazy" decoding="async">`).join('')}</div>`:''}
+          <p class="copy">${esc(e.description||'함께 책을 읽고, 생각과 마음을 나누는 시간입니다.')}</p>
         </div>
       </div>
       ${questionItems.length?`<div class="detail-section">
