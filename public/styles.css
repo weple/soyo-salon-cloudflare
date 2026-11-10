@@ -376,3 +376,49 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 #app .detail-intro>.event-description-gallery,#app .detail-intro>.copy{width:100%;max-width:100%;flex:none;margin:0}
 
 .top-action-spacer{width:42px;height:42px;flex:0 0 42px}
+
+/* Editorial introduction page */
+#app .about{padding-top:18px;padding-bottom:36px}
+#app .about-hero{position:relative;isolation:isolate;overflow:hidden;padding:28px 24px 32px;border:1px solid #ebe4dc;border-radius:28px;background:radial-gradient(ellipse at 100% 0%,#e1ebf7 0,transparent 42%),radial-gradient(ellipse at 0% 100%,#f9e5cf 0,transparent 48%),#fbfaf7}
+#app .about-mark{display:flex;align-items:center;gap:11px;color:#6348bd}
+#app .about-mark>span{font-family:serif;font-size:34px;line-height:1}
+#app .about-mark small{font-size:11px;letter-spacing:2.5px;font-weight:800;color:#82786e}
+#app .about-kicker{margin:34px 0 14px;color:#8a7763;font-size:10px;font-weight:800;letter-spacing:2px}
+#app .about-hero h1{position:relative;z-index:1;margin:0;font-size:clamp(31px,8vw,39px);line-height:1.43;letter-spacing:-1.7px}
+#app .about-hero h1 em{font-style:normal;color:#6045c2}
+#app .about-lead{position:relative;z-index:1;margin:20px 0 0;color:#625e59;font-size:14px;line-height:1.95}
+#app .about-orbit{display:inline-flex;margin-top:22px;padding:8px 13px;border-radius:99px;background:#ffffffba;color:#796b5d;font-size:11px;font-weight:700;letter-spacing:.3px}
+#app .about-principles{padding:36px 4px 0}
+#app .about-section-label{margin:0 0 9px;color:#8a7763;font-size:10px;font-weight:800;letter-spacing:2.3px}
+#app .about-principles h2{margin:0 0 20px;font-size:25px;line-height:1.45;letter-spacing:-1px}
+#app .about-values{display:grid;gap:10px}
+#app .about-values article{display:grid;grid-template-columns:34px minmax(0,1fr) 18px;align-items:start;gap:10px;margin:0;padding:17px 15px;border:1px solid #eee9e3;border-radius:18px;background:#fffefa}
+#app .about-value-number{padding-top:2px;color:#6045c2;font-size:11px;font-weight:800;letter-spacing:.5px}
+#app .about-values h3{margin:0 0 5px;font-size:15px;letter-spacing:-.3px}
+#app .about-values p{margin:0;color:#77716b;font-size:12px;line-height:1.8}
+#app .about-value-arrow{color:#b7a58d;font-size:15px}
+#app .about-invitation{margin:24px 0 0;padding:19px 20px;border-radius:18px;background:#efecf8;color:#5e527f}
+#app .about-invitation>span{font-size:9px;font-weight:800;letter-spacing:1.8px;opacity:.72}
+#app .about-invitation p{margin:8px 0 0;font-size:14px;font-weight:700;line-height:1.8}
+#app .about-actions{display:grid;gap:10px;margin-top:20px}
+#app .about-actions .cta{margin:0;text-decoration:none}
+@media(min-width:600px){#app .about-hero{padding:36px 32px 38px}#app .about-hero h1{font-size:42px}#app .about-values article{padding:19px 18px}}
+
+#app .events-page{padding-top:15px;padding-bottom:34px}
+#app .events-page>.eyebrow{color:#817668;font-size:10px;letter-spacing:2.1px}
+#app .events-page>.page-title{margin-top:12px;line-height:1.38;letter-spacing:-1.35px}
+#app .events-page>.subcopy{margin:11px 0 20px;font-size:14px;color:#716d69}
+#app .events-page .chiprow{gap:8px;margin:0 -4px 16px;padding:4px;scrollbar-width:none}
+#app .events-page .chiprow::-webkit-scrollbar{display:none}
+#app .events-page .chip{padding:10px 14px;border-color:#e7e3df;background:#fffefa;color:#655f5a;font-size:12px;font-weight:700;box-shadow:0 2px 8px #1d191208}
+#app .events-page .chip.on{border-color:#242229;background:#242229;color:white;box-shadow:none}
+#app .event-results-head{display:flex;align-items:center;justify-content:space-between;margin:0 2px 11px;color:#817970;font-size:12px}
+#app .event-results-head>span{font-weight:700;color:#4d4945}
+#app .event-results-head>b{font-size:11px;font-weight:600}
+#app .events-list{display:grid;gap:11px}
+#app .events-list .event-row{margin:0;box-shadow:0 4px 18px #21180b08;transition:transform .15s ease,box-shadow .15s ease}
+#app .events-list .event-row:active{transform:scale(.99)}
+#app .events-list .event-info .event-meta-group{width:100%}
+#app .events-list .event-info .event-subtitle{line-height:1.45}
+#app .events-list .event-info .event-badges{display:flex;flex-wrap:wrap;gap:6px}
+@media(max-width:370px){#app .events-page .chip{padding:9px 11px;font-size:11px}#app .events-list .event-row{gap:10px;padding:10px}#app .events-list .event-cover{width:82px;height:108px;flex-basis:82px}}
