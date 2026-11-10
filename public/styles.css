@@ -372,3 +372,5 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .event-image-preview img{display:block;width:100%;height:100%;object-fit:cover}
 .event-image-preview button{position:absolute;right:5px;bottom:5px;padding:5px 8px;border:0;border-radius:8px;background:#201f23d9;color:white;font-size:12px}
 @media(min-width:600px){.event-description-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.event-description-gallery img:only-child{grid-column:1/-1}}
+#app .detail-intro{display:flex;flex-direction:column;align-items:stretch;gap:16px}
+#app .detail-intro>.event-description-gallery,#app .detail-intro>.copy{width:100%;max-width:100%;flex:none;margin:0}
