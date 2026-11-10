@@ -374,3 +374,5 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 @media(min-width:600px){.event-description-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.event-description-gallery img:only-child{grid-column:1/-1}}
 #app .detail-intro{display:flex;flex-direction:column;align-items:stretch;gap:16px}
 #app .detail-intro>.event-description-gallery,#app .detail-intro>.copy{width:100%;max-width:100%;flex:none;margin:0}
+
+.top-action-spacer{width:42px;height:42px;flex:0 0 42px}
