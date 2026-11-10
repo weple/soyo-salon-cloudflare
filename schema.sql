@@ -1,6 +1,6 @@
 -- Supabase SQL Editor에서 실행. service_role 키는 브라우저에 노출하지 마세요.
 create extension if not exists pgcrypto;
-create table if not exists public.users(id uuid primary key default gen_random_uuid(),kakao_id text not null unique,nickname text not null,created_at timestamptz not null default now());
+create table if not exists public.users(id uuid primary key default gen_random_uuid(),kakao_id text not null unique,nickname text not null,created_at timestamptz not null default now(),login_count integer not null default 0 check(login_count >= 0),last_login_at timestamptz);
 create table if not exists public.events(id uuid primary key default gen_random_uuid(),title text not null,book text not null default '',author text not null default '',category text not null default '문학',date timestamptz not null,end_time text not null default '',place text not null,place_address text not null default '',description text not null default '',capacity int not null check(capacity between 1 and 100),color text not null default '#4055D8',accent text not null default '#D66A48',status text not null default 'open' check(status in ('open','closed','soon')),created_at timestamptz not null default now());
 create table if not exists public.applications(id uuid primary key default gen_random_uuid(),event_id uuid not null references public.events(id) on delete cascade,user_id uuid not null references public.users(id) on delete cascade,status text not null default 'pending' check(status in ('pending','confirmed','waitlist','cancelled')),created_at timestamptz not null default now(),unique(event_id,user_id));
 alter table public.applications add column if not exists depositor_name text not null default '';
@@ -67,3 +67,7 @@ revoke all on function public.apply_to_event(uuid,uuid,text,text,boolean) from p
 revoke all on function public.set_application_status(uuid,text) from public,anon,authenticated;
 grant execute on function public.apply_to_event(uuid,uuid,text,text,boolean) to service_role;
 grant execute on function public.set_application_status(uuid,text) to service_role;
+
+create or replace function public.record_user_login(p_user_id uuid) returns void language sql security definer set search_path = public as $$ update public.users set login_count = login_count + 1, last_login_at = now() where id = p_user_id; $$;
+revoke all on function public.record_user_login(uuid) from public, anon, authenticated;
+grant execute on function public.record_user_login(uuid) to service_role;
