@@ -454,3 +454,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 #app .member-applications>p{margin:8px 0 0;color:#827c75;font-size:12px}
 #app .member-footnote{margin-top:18px;color:#8a837b;font-size:11px;line-height:1.7}
 @media(max-width:370px){#app .member-stats{gap:5px}#app .member-stats article{padding:12px 8px}#app .member-stats small{font-size:9px}#app .member-metrics{grid-template-columns:.8fr 1.2fr}}
+
+#app .connection-notice{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 18px 8px;padding:11px 13px;border:1px solid #e6dece;border-radius:13px;background:#fff8eb;color:#675b49;font-size:12px;line-height:1.5}
+#app .connection-notice button{flex:0 0 auto;border:0;border-radius:99px;background:#ede8f8;color:#6045c2;padding:7px 10px;font-size:11px;font-weight:800}

@@ -14,8 +14,10 @@ let demo;try{demo=JSON.parse(localStorage.getItem('soyo-preview-v2'))}catch{}
 demo=demo||{events:seed,applications:[],user:null,admin:false};
 window.readingNotes=window.readingNotes||[];
 window.privateNotes=window.privateNotes||[];window.noteComments=window.noteComments||{};
-function cachedPublicEvents(){try{const cached=JSON.parse(sessionStorage.getItem('soyo-public-events')||'null');return cached&&Date.now()-cached.savedAt<900000&&Array.isArray(cached.events)?cached.events:[]}catch{return []}}
+function cachedPublicSnapshot(){try{const cached=JSON.parse(sessionStorage.getItem('soyo-public-events')||'null');return cached&&Date.now()-cached.savedAt<7*86400000&&Array.isArray(cached.events)?cached:null}catch{return null}}
+function cachedPublicEvents(){const cached=cachedPublicSnapshot();return cached&&Date.now()-cached.savedAt<900000?cached.events:[]}
 let db={events:cachedPublicEvents(),applications:[],user:null,admin:false},adminApplications=[],adminMembers=[],adminMembersError='',membersQuery='',publicReviews=[],myReviews=[],publicReadingNotes=[],privateNotes=[],notifications=[],expandedReadingNotes=new Set(),filter='전체',myFilter='다가오는',busy=false;
+let connectionNotice='';
 const homeHeroImages=['/images/home-hero-1.webp','/images/home-hero-2.webp','/images/home-hero-4.webp'];
 const homeHeroImage=homeHeroImages[Math.floor(Math.random()*homeHeroImages.length)];
 let [route='home',selected]=location.hash.slice(1).split('/');let editingEventId=null,recordTab='review',recordFormOpen=false,profileEditOpen=false;
@@ -60,9 +62,19 @@ async function api(path,method='GET',data){
   else if(path==='admin/events')demo.events.push({...data,id:crypto.randomUUID(),end_time:data.end,status:'open'});
   save();return {ok:true};
  }
- const r=await fetch('/api/'+path,{method,credentials:'same-origin',headers:{'content-type':'application/json'},body:data===undefined?undefined:JSON.stringify(data)});
- let j;try{j=await r.json()}catch{throw Error('서버에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.')}
- if(!r.ok)throw Error(j.error||'요청에 실패했습니다.');return j;
+ const retries=method==='GET'?2:0;let lastError;
+ for(let attempt=0;attempt<=retries;attempt++){
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),3500);
+  try{
+   const r=await fetch('/api/'+path,{method,credentials:'same-origin',headers:{'content-type':'application/json'},body:data===undefined?undefined:JSON.stringify(data),signal:controller.signal});
+   if((r.status===429||r.status>=500)&&attempt<retries){await r.body?.cancel().catch(()=>{});await new Promise(resolve=>setTimeout(resolve,300+attempt*500));continue}
+   let j;try{j=await r.json()}catch{throw Error('서버 응답을 확인하지 못했어요.')}
+   if(!r.ok){const error=Error(j.error||'요청에 실패했습니다.');error.status=r.status;throw error}
+   return j;
+  }catch(error){lastError=error;if(attempt>=retries||(error.status&&error.status<500&&error.status!==429))throw error;if(attempt<retries)await new Promise(resolve=>setTimeout(resolve,300+attempt*500))}
+  finally{clearTimeout(timer)}
+ }
+ throw lastError||Error('서버에 연결하지 못했어요.');
 }
 async function loadRouteData(target=route){
  const jobs=[],ownerId=db.user?.id,userScoped=['applications','myReviews','privateNotes','notifications'];
@@ -82,7 +94,8 @@ async function loadRouteData(target=route){
  if((target==='admin'||target==='editEvent'||target==='newEvent')&&db.admin){add('events','admin/events');if(target==='admin'){add('adminApplications','admin/applications');add('publicReviews','reviews');add('adminBookReviews','admin/book-reviews')}}if(target==='members'&&db.admin)add('adminMembers','admin/members')
  await Promise.all(jobs.map(job=>job()));if(target===route)render()
 }
-async function reload(){if(db.events.length&&['home','events','about','privacy','login'].includes(route))render();const [events,me]=await Promise.all([api('events'),api('me')]);try{sessionStorage.setItem('soyo-public-events',JSON.stringify({savedAt:Date.now(),events}))}catch{}if(db.user?.id!==me.user?.id){privateNotes=[];window.privateNotes=[];myReviews=[];notifications=[]}db={events,...me,applications:[]};render();await loadRouteData(route)}
+async function reload(){if(db.events.length&&['home','events','about','privacy','login'].includes(route))render();const [eventsResult,meResult]=await Promise.allSettled([api('events'),api('me')]);let events,usingCache=false;if(eventsResult.status==='fulfilled'&&Array.isArray(eventsResult.value)){events=eventsResult.value;try{sessionStorage.setItem('soyo-public-events',JSON.stringify({savedAt:Date.now(),events}))}catch{}}else{const cached=cachedPublicSnapshot();if(!cached)throw eventsResult.reason||Error('모임 정보를 불러오지 못했어요.');events=cached.events;usingCache=true}const me=meResult.status==='fulfilled'?meResult.value:{user:db.user,admin:db.admin};if(meResult.status==='rejected'||usingCache)connectionNotice='연결이 잠시 불안정해 최신 정보가 아닐 수 있어요.';else connectionNotice='';if(db.user?.id!==me.user?.id){privateNotes=[];window.privateNotes=[];myReviews=[];notifications=[]}db={events,...me,applications:[]};render();await loadRouteData(route)}
+async function retryConnection(){connectionNotice='다시 연결하고 있어요.';render();try{await reload();if(!connectionNotice)toast('최신 정보를 불러왔어요.')}catch{connectionNotice='연결이 되지 않았어요. 잠시 뒤 다시 시도해 주세요.';render()}}
 function nav(r,id){closeModal();route=r;selected=id;const next=r+(id?'/'+id:'');if(location.hash.slice(1)!==next)location.hash=next;else render();window.scrollTo({top:0})}
 window.addEventListener('hashchange',()=>{[route='home',selected]=location.hash.slice(1).split('/');render();window.scrollTo({top:0});loadRouteData(route)});
 const date=s=>new Date(s).toLocaleDateString('ko-KR',{timeZone:'Asia/Seoul',month:'long',day:'numeric',weekday:'short'});
@@ -260,5 +273,6 @@ function closeModal(){$('#modal-root').innerHTML='';previousFocus?.focus();previ
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();const m=$('.modal');if(m&&e.key==='Tab'){const f=[...m.querySelectorAll('button,input,a')].filter(x=>!x.disabled);if(e.shiftKey&&document.activeElement===f[0]){e.preventDefault();f.at(-1).focus()}else if(!e.shiftKey&&document.activeElement===f.at(-1)){e.preventDefault();f[0].focus()}}});
 async function demoAdmin(){demo.user={id:'demo-user',nickname:'소요 회원'};demo.admin=!demo.admin;save();await reload();if(demo.admin)await loadAdmin();else nav('my')}
 function resetDemo(){openModal('<h2>미리보기를 초기화할까요?</h2><p>가상 신청 내역과 추가한 모임이 초기화됩니다.</p><button class="cta" onclick="localStorage.removeItem(\'soyo-preview-v2\');sessionStorage.removeItem(\'soyo-intent\');location.href=location.pathname">초기화하기</button>')}
-function render(){document.body.classList.toggle('home-page',route==='home');document.body.classList.toggle('detail-page',route==='detail');$('#app').innerHTML=({home,events,detail,login,success,my,about,privacy,notifications:notificationsPage,admin,members,newEvent,editEvent:editEventPage,reviews:reviewsPage}[route]||home)()+tabs();if(preview){$('#studio').innerHTML=`<div class="preview-ribbon"><span>미리보기 · 예시 일정</span><div><button onclick="demoAdmin()">${demo.admin?'회원 보기':'관리자 체험'}</button><button onclick="resetDemo()">초기화</button></div></div>`}}
-reload().then(()=>{if(new URLSearchParams(location.search).has('logged_in')){history.replaceState(null,'',location.pathname+location.hash);const id=sessionStorage.getItem('soyo-intent');if(id){nav('detail',id);setTimeout(()=>requestApply(id),50)}else nav('my')}}).catch(()=>{$('#app').innerHTML=`${header('소요살롱')}<div class="empty"><h2>잠시 연결이 어려워요.</h2><p>잠시 후 다시 시도해 주세요.</p><button class="cta" onclick="location.reload()">다시 불러오기</button></div>`});
+function render(){document.body.classList.toggle('home-page',route==='home');document.body.classList.toggle('detail-page',route==='detail');$('#app').innerHTML=({home,events,detail,login,success,my,about,privacy,notifications:notificationsPage,admin,members,newEvent,editEvent:editEventPage,reviews:reviewsPage}[route]||home)()+tabs();if(connectionNotice){const notice=`<aside class="connection-notice" role="status"><span>${esc(connectionNotice)}</span><button type="button" onclick="retryConnection()">다시 시도</button></aside>`,top=$('#app .top');if(top)top.insertAdjacentHTML('afterend',notice);else $('#app').insertAdjacentHTML('afterbegin',notice)}if(preview){$('#studio').innerHTML=`<div class="preview-ribbon"><span>미리보기 · 예시 일정</span><div><button onclick="demoAdmin()">${demo.admin?'회원 보기':'관리자 체험'}</button><button onclick="resetDemo()">초기화</button></div></div>`}}
+window.addEventListener('online',()=>{if(connectionNotice)retryConnection()});
+reload().then(()=>{if(new URLSearchParams(location.search).has('logged_in')){history.replaceState(null,'',location.pathname+location.hash);const id=sessionStorage.getItem('soyo-intent');if(id){nav('detail',id);setTimeout(()=>requestApply(id),50)}else nav('my')}}).catch(()=>{$('#app').innerHTML=`${header('소요살롱')}<div class="empty"><h2>연결이 잠시 불안정해요.</h2><p>저장된 모임 정보를 찾지 못했어요. 다시 연결을 시도해 주세요.</p><button class="cta" onclick="retryConnection()">다시 연결하기</button></div>${tabs()}`});
