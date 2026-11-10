@@ -349,9 +349,9 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   #app .home-event-info .event-meta svg{width:17px;height:17px;flex:none}
 }
 .notification-trigger{position:relative}
-.notification-trigger i,.home-bell i{position:absolute;top:5px;right:5px;width:9px;height:9px;border:2px solid #f8f7f3;border-radius:50%;background:#e85d48}
+.notification-count,.home-notification-count{position:absolute;top:0;right:0;display:grid;place-items:center;min-width:17px;height:17px;padding:0 4px;border:2px solid #f8f7f3;border-radius:99px;background:#e85d48;color:#fff;font-size:9px;font-style:normal;font-weight:800;line-height:1}
 .home-bell{position:relative;display:grid;place-items:center;width:40px;height:40px;border:0;background:transparent;color:inherit}
-.home-bell i{top:4px;right:4px}
+.home-notification-count{top:-1px;right:-2px}
 .notification-list{display:grid;gap:11px;margin-top:24px}
 .notification-card{position:relative;display:flex;align-items:flex-start;gap:13px;width:100%;padding:17px 16px;border:1px solid #eee9e3;border-radius:18px;background:#fffdfa;text-align:left;color:inherit}
 .notification-card.read{background:#f8f7f4;color:#6e6b68}
