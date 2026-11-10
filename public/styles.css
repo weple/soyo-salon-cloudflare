@@ -361,6 +361,10 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .notification-copy>span{font-size:14px;line-height:1.65;color:#5f5a56}
 .notification-copy small,.notification-copy time{font-size:12px;color:#89827b}
 .notification-unread{width:8px;height:8px;margin:5px 2px 0 0;border-radius:50%;background:#6045c2}
+.notification-card{display:block;padding:17px 16px;}
+.notification-main{display:flex;align-items:flex-start;gap:13px;width:100%;padding:0 28px 0 0;border:0;background:transparent;color:inherit;text-align:left}
+.notification-delete{position:absolute;top:12px;right:12px;padding:5px 7px;border:0;border-radius:8px;background:transparent;color:#8b8580;font-size:12px}
+.notification-kakao{display:inline-flex;align-items:center;margin:13px 0 0 51px;padding:9px 12px;border-radius:11px;background:#f8e768;color:#2f2a17!important;text-decoration:none;font-size:13px;font-weight:700}
 .event-description-gallery,.event-image-preview{display:grid;gap:12px;margin-top:18px}
 .event-description-gallery img{display:block;width:100%;height:auto;max-height:620px;object-fit:cover;border-radius:18px;background:#f1eee9}
 .event-image-preview{grid-template-columns:repeat(3,minmax(0,1fr));margin:12px 0 20px}
