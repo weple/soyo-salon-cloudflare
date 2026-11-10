@@ -304,11 +304,11 @@ button{-webkit-appearance:none;appearance:none;color:inherit;-webkit-tap-highlig
   #app .detail-summary{padding:9px 16px}
   #app .detail-summary>div,#app .detail-summary>.detail-place-link{min-height:80px;grid-template-columns:36px minmax(0,1fr);gap:13px;padding:11px 4px}
   #app .detail-summary svg{width:27px;height:27px}
-  #app .detail-summary p{gap:4px;font-size:16px!important;line-height:1.45}
-  #app .detail-summary p small{font-size:13px!important;line-height:1.35}
-  #app .detail-summary p b{font-size:18px!important;line-height:1.35}
-  #app .detail-summary p span{font-size:15px!important;line-height:1.5}
-  #app .detail-summary .detail-map-link{font-size:14px!important}
+  #app .detail-summary p{gap:4px;font-size:15px!important;line-height:1.45}
+  #app .detail-summary p small{font-size:12px!important;line-height:1.35}
+  #app .detail-summary p b{font-size:17px!important;line-height:1.35}
+  #app .detail-summary p span{font-size:14px!important;line-height:1.5}
+  #app .detail-summary .detail-map-link{font-size:13px!important}
   .detail-page .detail-content{padding-top:44px}
   .detail-section{margin:24px 0 48px}
   .detail-page .detail-content>h2{margin-top:48px;margin-bottom:16px}
@@ -317,10 +317,22 @@ button{-webkit-appearance:none;appearance:none;color:inherit;-webkit-tap-highlig
 @media(max-width:370px){
 #app .detail-summary{padding-left:13px;padding-right:13px}
 #app .detail-summary>div,#app .detail-summary>.detail-place-link{min-height:76px;grid-template-columns:32px minmax(0,1fr);gap:10px}
-#app .detail-summary p{font-size:15px!important}
-#app .detail-summary p small{font-size:12px!important}
-#app .detail-summary p b{font-size:17px!important}
-#app .detail-summary p span{font-size:14px!important}
-#app .detail-summary .detail-map-link{font-size:13px!important}
+#app .detail-summary p{font-size:14px!important}
+#app .detail-summary p small{font-size:11px!important}
+#app .detail-summary p b{font-size:16px!important}
+#app .detail-summary p span{font-size:13px!important}
+#app .detail-summary .detail-map-link{font-size:12px!important}
   .detail-section{margin-bottom:42px}
+}
+@media(max-width:799px){
+  #app .event-info .event-meta-group{display:grid;gap:5px;margin-top:5px}
+  #app .event-info .event-meta-group .event-meta{font-size:13px!important;line-height:1.55;color:#514b46;gap:7px}
+  #app .event-info .event-meta svg{width:17px;height:17px;color:#66548f}
+  #app .home-event-info .event-meta-group{display:grid;gap:6px;margin-top:6px}
+  #app .home-event-info .event-meta-group .event-meta{font-size:14px!important;line-height:1.55;color:#403c39;gap:8px}
+  #app .home-event-info .event-meta svg{width:19px;height:19px;color:#6045c2}
+}
+@media(max-width:370px){
+  #app .event-info .event-meta-group .event-meta{font-size:12px!important}
+  #app .home-event-info .event-meta-group .event-meta{font-size:13px!important}
 }
