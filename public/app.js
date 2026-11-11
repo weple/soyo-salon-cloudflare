@@ -160,7 +160,7 @@ function detail(){
     <section class="detail-summary" aria-label="모임 정보">
       <div class="detail-summary-item">${icon('calendar',22)}<p><small>일정</small><b>${esc(dateLabel)}</b><span>${time(e.date)}${e.end_time?' – '+esc(e.end_time):''}</span></p></div>
       <a class="detail-summary-item detail-place-link" href="${mapUrl(e)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(placeName(e))} 네이버 지도에서 열기">${icon('pin',22)}<p><small>장소</small><b>${esc(placeName(e))}</b><span class="detail-map-link">지도에서 보기 →</span></p></a>
-      <div class="detail-summary-item">${icon('cup',22)}<p><small>비용</small><b>무료</b><span>보증금 ${deposit}</span></p></div>
+      <div class="detail-summary-item">${icon('cup',22)}<p><small>비용</small><b>무료</b><span>보증금 ${deposit}</span><span class="detail-tea-order">차는 각자 주문해요.</span></p></div>
     </section>
     <section class="content detail-content">
       <div class="detail-section detail-book-section">
