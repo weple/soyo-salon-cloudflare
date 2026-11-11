@@ -160,7 +160,7 @@ function detail(){
     <section class="detail-summary" aria-label="모임 정보">
       <div class="detail-summary-item">${icon('calendar',22)}<p><small>일정</small><b>${esc(dateLabel)}</b><span>${time(e.date)}${e.end_time?' – '+esc(e.end_time):''}</span></p></div>
       <a class="detail-summary-item detail-place-link" href="${mapUrl(e)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(placeName(e))} 네이버 지도에서 열기">${icon('pin',22)}<p><small>장소</small><b>${esc(placeName(e))}</b><span class="detail-map-link">지도에서 보기 →</span></p></a>
-      <div class="detail-summary-item">${icon('cup',22)}<p><small>비용</small><b>무료</b><span>보증금 ${deposit}</span><span class="detail-tea-order">차는 각자 주문해요.</span></p></div>
+      <div class="detail-summary-item">${icon('cup',22)}<p><small>비용</small><b>무료</b><span>보증금 ${deposit}</span></p></div>
     </section>
     <section class="content detail-content">
       <div class="detail-section detail-book-section">
@@ -188,6 +188,7 @@ function detail(){
         <h2 class="detail-section-title">참여 안내</h2>
         <ul class="detail-guide">
           <li><strong>신청 승인 후 24시간 이내</strong> 보증금을 입금해 주세요.</li>
+          <li>차는 각자 주문해 주세요.</li>
           <li>모임 참석 시 <strong>종료 후 전액 환불</strong>됩니다.</li>
           <li><strong>모임 2일 전까지 취소</strong>하면 전액 환불되며, <strong>하루 전·당일 취소 또는 노쇼</strong> 시 보증금 전액을 <strong>어려운 이웃에게 기부</strong>합니다.</li>
           <li>운영자 사정으로 모임이 취소되면 <strong>전액 환불</strong>됩니다.</li>
